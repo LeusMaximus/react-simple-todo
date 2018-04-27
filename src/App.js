@@ -1,7 +1,19 @@
 import React, { Component } from 'react';
 
 class App extends Component {
+  state = {
+    todos: [
+      {
+        id: Date.now(),
+        text: 'Learn React',
+        done: false
+      }
+    ],
+  }
+
   render() {
+    const { todos } = this.state;
+
     return (
       <div>
         <h1>Simple React TODO</h1>
@@ -12,10 +24,15 @@ class App extends Component {
         </form>
 
         <ul>
-          <li>
-            <span>First todo</span>
-            <button type="button">&times;</button>
-          </li>
+          {todos.map(todo => (
+            <li>
+              <span>
+                {todo.done ? <s>{todo.text}</s> : todo.text}
+              </span>
+
+              <button type="button">&times;</button>
+            </li>
+          ))}
         </ul>
       </div>
     );
