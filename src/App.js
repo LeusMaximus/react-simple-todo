@@ -42,6 +42,20 @@ class App extends Component {
     });
   }
 
+  handleChangeTodoStatus = id => e => {
+    this.setState(prevState => (
+      {
+        todos: prevState.todos.map(todo => todo.id === id
+          ? {
+              ...todo,
+              done: !todo.done,
+            }
+          : todo
+        ),
+      }
+    ));
+  }
+
   render() {
     const { todos, newValue } = this.state;
 
@@ -57,7 +71,7 @@ class App extends Component {
         <ul>
           {todos.map(todo => (
             <li key={todo.id}>
-              <span>
+              <span onClick={this.handleChangeTodoStatus(todo.id)}>
                 {todo.done ? <s>{todo.text}</s> : todo.text}
               </span>
 
