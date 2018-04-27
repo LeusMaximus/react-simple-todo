@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 class App extends Component {
   state = {
+    newValue: '',
     todos: [
       {
         id: Date.now(),
@@ -11,21 +12,51 @@ class App extends Component {
     ],
   }
 
+  handleAddTodo = e => {
+    e.preventDefault();
+
+    this.setState(prevState => {
+      const isEmptyValue = prevState.newValue.trim() === '';
+
+      if (isEmptyValue) return prevState;
+
+      return {
+        newValue: '',
+        todos: [
+          ...prevState.todos,
+          {
+            id: Date.now(),
+            text: prevState.newValue,
+            done: false
+          }
+        ],
+      };
+    });
+  }
+
+  handleNewValue = e => {
+    const value = e.currentTarget.value;
+
+    this.setState({
+        newValue: value
+    });
+  }
+
   render() {
-    const { todos } = this.state;
+    const { todos, newValue } = this.state;
 
     return (
       <div>
         <h1>Simple React TODO</h1>
 
-        <form>
-          <input type="text" />
+        <form onSubmit={this.handleAddTodo}>
+          <input type="text" value={newValue} onChange={this.handleNewValue} />
           <button type="submit">Add</button>
         </form>
 
         <ul>
           {todos.map(todo => (
-            <li>
+            <li key={todo.id}>
               <span>
                 {todo.done ? <s>{todo.text}</s> : todo.text}
               </span>
