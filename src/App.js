@@ -3,13 +3,7 @@ import React, { Component } from 'react';
 class App extends Component {
   state = {
     newValue: '',
-    todos: [
-      {
-        id: Date.now(),
-        text: 'Learn React',
-        done: false
-      }
-    ],
+    todos: [],
   }
 
   handleAddTodo = e => {
@@ -56,6 +50,14 @@ class App extends Component {
     ));
   }
 
+  handleRemoveTodo = id => e => {
+    this.setState(prevState => (
+      {
+        todos: prevState.todos.filter(todo => todo.id !== id),
+      }
+    ))
+  }
+
   render() {
     const { todos, newValue } = this.state;
 
@@ -75,7 +77,9 @@ class App extends Component {
                 {todo.done ? <s>{todo.text}</s> : todo.text}
               </span>
 
-              <button type="button">&times;</button>
+              <button type="button" onClick={this.handleRemoveTodo(todo.id)}>
+                &times;
+              </button>
             </li>
           ))}
         </ul>
