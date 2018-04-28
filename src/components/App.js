@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import TodoInput from './TodoInput';
+
 class App extends Component {
   state = {
     newValue: '',
@@ -65,10 +67,11 @@ class App extends Component {
       <div>
         <h1>Simple React TODO</h1>
 
-        <form onSubmit={this.handleAddTodo}>
-          <input type="text" value={newValue} onChange={this.handleNewValue} />
-          <button type="submit">Add</button>
-        </form>
+        <TodoInput
+          onSubmit={this.handleAddTodo}
+          onChange={this.handleNewValue}
+          value={newValue}
+        />
 
         <ul>
           {todos.map(todo => (
