@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import TodoInput from './TodoInput';
+import TodoList from './TodoList';
 
 class App extends Component {
   state = {
@@ -73,19 +74,11 @@ class App extends Component {
           value={newValue}
         />
 
-        <ul>
-          {todos.map(todo => (
-            <li key={todo.id}>
-              <span onClick={this.handleChangeTodoStatus(todo.id)}>
-                {todo.done ? <s>{todo.text}</s> : todo.text}
-              </span>
-
-              <button type="button" onClick={this.handleRemoveTodo(todo.id)}>
-                &times;
-              </button>
-            </li>
-          ))}
-        </ul>
+        <TodoList
+          todos={todos}
+          handleChangeTodoStatus={this.handleChangeTodoStatus}
+          handleRemoveTodo={this.handleRemoveTodo}
+        />
       </div>
     );
   }
