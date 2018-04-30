@@ -12,21 +12,20 @@ class App extends Component {
   handleAddTodo = e => {
     e.preventDefault();
 
+    const newValue = this.state.newValue.trim();
+
+    if (!newValue.length) return;
+
+    const newTodo = {
+      id: Date.now(),
+      text: newValue,
+      done: false
+    };
+
     this.setState(prevState => {
-      const isEmptyValue = prevState.newValue.trim() === '';
-
-      if (isEmptyValue) return prevState;
-
       return {
         newValue: '',
-        todos: [
-          ...prevState.todos,
-          {
-            id: Date.now(),
-            text: prevState.newValue,
-            done: false
-          }
-        ],
+        todos: [...prevState.todos, newTodo],
       };
     });
   }
